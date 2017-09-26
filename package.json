@@ -1,7 +1,7 @@
 {
   "name": "@cotto/action-stream",
   "description": "action-stream",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "cotto",
   "files": [
     "es",
@@ -24,19 +24,19 @@
   "homepage": "https://github.com/cotttpan/action-stream",
   "dependencies": {
     "@cotto/action-dispatcher": "^0.0.1",
-    "@types/node": "^8.0.28",
-    "most": "^1.7.0",
+    "@types/node": "^8.0.31",
+    "most": "^1.7.2",
     "typescript-fsa": "^2.5.0"
   },
   "devDependencies": {
-    "@cotto/tslint-config": "^0.0.6",
-    "@types/jest": "^20.0.8",
-    "@types/sinon": "^2.3.4",
-    "jest": "^21.0.2",
+    "@cotto/tslint-config": "^0.0.7",
+    "@types/jest": "^21.1.1",
+    "@types/sinon": "^2.3.5",
+    "jest": "^21.1.0",
     "npm-run-all": "^4.1.1",
     "rimraf": "^2.6.2",
-    "sinon": "^3.2.1",
-    "ts-jest": "^21.0.0",
+    "sinon": "^3.3.0",
+    "ts-jest": "^21.0.1",
     "tslint": "^5.7.0",
     "typescript": "^2.5.2"
   },
