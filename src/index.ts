@@ -28,7 +28,7 @@ export interface Epic<A, C, R> {
 }
 
 export interface MergedCtx<T = any> {
-    next: Dispatcher<T>['dispatchAsync'];
+    next: Dispatcher<T>['dispatch'];
 }
 
 /**
@@ -50,7 +50,7 @@ export function bootEpics<A, C, R>({ epics, context, dispatcher = new Dispatcher
     context: C,
     dispatcher?: Dispatcher<A>
 }) {
-    const next = dispatcher.dispatchAsync.bind(dispatcher);
+    const next = dispatcher.dispatch.bind(dispatcher);
     const ctx: MergedCtx<A> & C = Object.assign({}, context, { next });
 
     return mergeArray(epics.map(ep => ep(dispatcher, ctx)));
