@@ -17,7 +17,7 @@ export function listen<P>(target: ActionCreator<P> | EmptyActionCreator, src: Di
 export function listen<T, K extends keyof T>(target: K, src: Dispatcher<T>): Stream<T[K]>;
 export function listen<T, K extends keyof T, P>(target: K | ActionCreator<P> | EmptyActionCreator, src: Dispatcher<T>): Stream<any> {
     const ev = typeof target === 'string' ? target : target.type;
-    return fromEvent(ev, src).delay(0);
+    return fromEvent(ev, src);
 }
 
 // ==================================================================
