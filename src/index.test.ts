@@ -19,13 +19,13 @@ test('listen a action creator', (done) => {
 
     const e1: Epic = (ev, ctx) => listen(a1, ev)
         .tap(() => expect(ev).toBe(dispatcher))
-        .tap(x => expect(typeof x).toBe('number'))
+        .tap(x => expect(x).toEqual(a1(1)))
         .tap(() => expect(ctx.str).toBe('xxx'))
-        .tap(x => ctx.next(a2(x * 10)))
+        .tap(x => ctx.next(a2(x.payload * 10)))
         .constant(true);
 
     const e2: Epic = (ev, ctx) => listen(a2, ev)
-        .tap(x => expect(x).toBe(10))
+        .tap(x => expect(x).toEqual(a2(10)))
         .constant(true)
         .tap(() => ctx.done());
 
@@ -44,12 +44,12 @@ test('listen a action name', (done) => {
     expect.assertions(2);
 
     const e3: Epic = (ev, { next }) => listen('a3', ev)
-        .tap(x => expect(x).toBe(1))
-        .tap(x => next('a4', String(x)))
+        .tap(x => expect(x).toEqual({ type: 'a3', payload: 1 }))
+        .tap(x => next('a4', String(x.payload)))
         .constant(true);
 
     const e4: Epic = (ev, ctx) => listen('a4', ev)
-        .tap(x => expect(x).toBe('1'))
+        .tap(x => expect(x).toEqual({ type: 'a4', payload: '1' }))
         .constant(true)
         .tap(() => ctx.done());
 

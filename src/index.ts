@@ -1,7 +1,6 @@
 import { Stream, fromEvent, mergeArray } from 'most';
 import Dispatcher from '@cotto/action-dispatcher';
-import { ActionCreator, EmptyActionCreator } from 'typescript-fsa';
-
+import { ActionCreator, EmptyActionCreator, Action } from 'typescript-fsa';
 export { Dispatcher };
 
 /**
@@ -13,8 +12,8 @@ export { Dispatcher };
  * @param {Dispatcher<any>} src
  * @returns {Stream<P>}
  */
-export function listen<P>(target: ActionCreator<P> | EmptyActionCreator, src: Dispatcher<any>): Stream<P>;
-export function listen<T, K extends keyof T>(target: K, src: Dispatcher<T>): Stream<T[K]>;
+export function listen<P>(target: ActionCreator<P> | EmptyActionCreator, src: Dispatcher<any>): Stream<Action<P>>;
+export function listen<T, K extends keyof T>(target: K, src: Dispatcher<T>): Stream<Action<T[K]>>;
 export function listen<T, K extends keyof T, P>(target: K | ActionCreator<P> | EmptyActionCreator, src: Dispatcher<T>): Stream<any> {
     const ev = typeof target === 'string' ? target : target.type;
     return fromEvent(ev, src);
