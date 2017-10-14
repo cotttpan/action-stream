@@ -10,7 +10,7 @@ interface ActionMap {
     a4: string;
 }
 
-type Epic = _Epic<ActionMap, { str: string, done: Function }, boolean>;
+type Epic = _Epic<{ str: string, done: Function, next: Function }, boolean, ActionMap>;
 
 const dispatcher = new Dispatcher<ActionMap>();
 
@@ -31,7 +31,7 @@ test('listen a action creator', (done) => {
 
     const usecase$ = bootEpics({
         epics: [e1, e2],
-        context: { str: 'xxx', done },
+        context: { str: 'xxx', done, next: dispatcher.dispatch.bind(dispatcher) },
         dispatcher
     });
 
@@ -55,7 +55,7 @@ test('listen a action name', (done) => {
 
     const usecase$ = bootEpics({
         epics: [e3, e4],
-        context: { str: 'xxx', done },
+        context: { str: 'xxx', done, next: dispatcher.dispatch.bind(dispatcher) },
         dispatcher
     });
 

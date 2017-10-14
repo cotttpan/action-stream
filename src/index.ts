@@ -22,12 +22,8 @@ export function listen<T, K extends keyof T, P>(target: K | ActionCreator<P> | E
 // ==================================================================
 // BootEpics
 // ==================================================================
-export interface Epic<A, C, R> {
-    (event: Dispatcher<A>, context: MergedCtx<A> & C): Stream<R>;
-}
-
-export interface MergedCtx<T = any> {
-    next: Dispatcher<T>['dispatch'];
+export interface Epic<C, R, A = {}> {
+    (event: Dispatcher<A>, context: C): Stream<R>;
 }
 
 /**
@@ -44,13 +40,11 @@ export interface MergedCtx<T = any> {
  * }} { epics, context, dispatcher = new Dispatcher<A>() }
  * @returns
  */
-export function bootEpics<A, C, R>({ epics, context, dispatcher = new Dispatcher<A>() }: {
-    epics: Epic<A, C, R>[],
+export function bootEpics<C, R, A = {}>({ epics, context, dispatcher = new Dispatcher<A>() }: {
+    epics: Epic<C, R>[],
     context: C,
     dispatcher?: Dispatcher<A>
 }) {
-    const next = dispatcher.dispatch.bind(dispatcher);
-    const ctx: MergedCtx<A> & C = Object.assign({}, context, { next });
 
-    return mergeArray(epics.map(ep => ep(dispatcher, ctx)));
+    return mergeArray(epics.map(ep => ep(dispatcher, context)));
 }
